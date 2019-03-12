@@ -1,0 +1,92 @@
+<div id="content">
+
+  <!-- Top Bar -->
+  <div class="container-fluid top-bar">
+    <div class="row">
+      <div class="col-sm-5 col-md-6" style="padding-left: 100px;" >
+        Customers:12344
+      </div>
+      <div class="col-sm-5 col-sm-offset-2 add_customer">
+        <button class="btn btn-lg btn-outline-primary add_customer" (click)="open(customerModal)">Add Customer</button>
+      </div>
+      <div class="col-sm-5 col-sm-offset-2 add_customer">
+        <form class="form-inline">
+          <input class="form-control" name="searchInput" placeholder="Search" #searchInput="ngModel" [(ngModel)]="searchText">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-info" *ngIf="showSuccessMessage">
+    Submit Successfully
+  </div>
+
+  <!-- Modal code -->
+  <ng-template #customerModal let-modal>
+    <div class="customer_modal">
+      <div class="modal-body">
+        <form [formGroup]="this.customerService.form" (ngSubmit)="onSubmit()">
+          <input type="hidden" formControlName="id">
+          <div class="form-group">
+            <label>Name</label>
+            <input formControlName="name" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.name.errors}">
+            <div class="invalid-feedback" *ngIf="submitted && formControls.name.errors">
+              This field is required.</div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input formControlName="email" type="email" class="form-control"[ngClass]="{'is-invalid':submitted && formControls.email.errors}">
+            <div class="invalid-feedback" *ngIf="submitted && formControls.email.errors">
+              This field is required.</div>
+          </div>
+          <div class="form-group">
+            <label>Contact Number</label>
+            <input formControlName="contactNumber" type="tel" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.contactNumber.errors}">
+            <div class="invalid-feedback" *ngIf="submitted && formControls.contactNumber.errors">
+              <label *ngIf="formControls.contactNumber.errors.required">This field is required.</label>
+              <label *ngIf="formControls.contactNumber.errors.minlength">Atleast 8 numbers.</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Birthdate</label>
+            <input formControlName="birthdate" type="date" class="form-control">
+          </div>
+          <button type="submit" value="submit" class="btn custom_btn" >Save</button>
+          <p style="text-align: center; padding-top: 10px;">
+              <button class="btn btn-lg  cancel_form_btn" style="text-align: center;" (click)="modal.dismiss('Cross click')">Cancel</button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Table code -->
+  <div class="container">
+    <table class="table table-sm list_heading">
+      <thead>
+        <th colspan="3">Name</th>
+        <th colspan="3">Email</th>
+        <th colspan="3">Birthdate</th>
+        <th colspan="3"></th>
+      </thead>
+      <ng-container *ngFor="let customer of customerArray">
+        <tr class="list_elements" *ngIf="filterCondition(customer)" >
+          <td colspan="3">{{customer.name}}</td>
+          <td colspan="3">{{customer.email}}</td>
+          <td colspan="3">{{customer.birthdate}}</td>
+          <td colspan="3">
+            <button class="btn no_background_button" (click)="onDelete(customer.id)">Delete</button>
+            
+            <button class="btn no_background_button" style="margin-left: 15px;" (click)="onEdit(customer,customerModal)">Edit</button>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+    <div class="alert alert-danger" *ngIf="showDeletedMessage">
+      Deleted successfully.
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+        
+</div>
