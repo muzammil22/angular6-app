@@ -17,7 +17,7 @@ export class CustomerService {
 		name: new FormControl('', Validators.required),
 		email: new FormControl('', Validators.email),
 		contactNumber: new FormControl('', [Validators.required, Validators.minLength(8)]),
-		birthdate: new FormControl(''),
+		birthdate: new FormControl('')
 	});
 
 	getCustomers() {
@@ -26,7 +26,7 @@ export class CustomerService {
 	}
 
 	insertCustomer(customer) {
-    delete customer.accountType; 
+    //delete customer.accountType; 
     this.customerList.add(customer);
   }
 

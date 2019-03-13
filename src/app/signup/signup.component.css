@@ -1,0 +1,96 @@
+body {
+    background: #fafafa;
+}
+
+.form-div {
+	width: 50%;
+}
+
+.form-adjustment {
+	padding-right: 35px !important;
+	padding-left: 35px !important;
+}
+
+/*.logo-image {
+	background-image: url('../assets/auth-logo.png');
+	width: 50%;
+   position: absolute;
+   left: 0px;
+   height: 100%;
+   background-size: cover;
+}*/
+.left-pannel-img{
+  width: inherit;
+  height: 100%;
+  height: -moz-available;          /* WebKit-based browsers will ignore this. */
+  height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  height: fill-available;
+}
+.form-container {
+   width: 50%;
+   float: right;
+   padding-left: 100px;
+   padding-right: 100px;
+   padding-top: 100px;
+}
+
+.form-box {
+	background: #fff !important;
+	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+	transition: all 0.3s;
+	font-weight: 300;
+	color: #6e6e6e;
+	font-size: 18px;
+	font-family: 'Nunito', sans-serif;
+	padding-left: 75px;
+	padding-right: 75px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 10px
+
+}
+
+.form-heading {
+	font-weight: 700;
+	color: #6e6e6e;
+	font-size: 18px;
+	font-family: 'Nunito', sans-serif;
+}
+
+.form-control {
+	border: 0;
+	background: #F7F7F7;
+	border-radius: 10px;
+	height: 50px;
+
+}
+
+.form-actions {
+	color: #2EDEFF !important;
+}
+
+.btn-login {
+    background: #2EDEFF;
+    width: 100%;
+    font-weight: 700;
+	color: #fff;
+	font-size: 20px;
+	font-family: 'Nunito', sans-serif;
+}
+.wrapper {
+    /*display: flex;
+    width: 100%;
+    align-items: stretch;*/
+}
+
+@media (min-width: 1400px) {
+    .form-adjustment {
+		padding-right: 50px !important;
+		padding-left: 50px !important;
+	}
+	.form-box {
+		padding-top: 25px;
+		padding-bottom: 25px;
+
+	}
+}

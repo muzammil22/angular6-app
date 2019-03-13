@@ -1,0 +1,42 @@
+<div class="wrapper">
+	<div class="row no-gutters">
+	  <div class="col-6 d-none d-md-block my-auto">
+	    <img src="./assets/auth-logo.png" class="left-pannel-img"/>
+	  </div>
+	  <div class="col-12 col-md-6 my-auto form-adjustment">
+	    <div class="form-box">
+    	<form [formGroup]="signUpForm"  *ngIf="newUser"  (ngSubmit)="signup()">
+	      <div class="form-group">
+	        <label for="name" class="form-heading">Name:</label>
+	        <input type="name" class="form-control" formControlName="email" required>
+	      </div>
+	      <div class="form-group">
+	        <label for="name" class="form-heading">Company Name:</label>
+	        <input type="name" class="form-control" formControlName="companyName" required>
+	      </div>
+	      <div class="form-group">
+	        <label for="email" class="form-heading">Email:</label>
+	        <input type="email" class="form-control" formControlName="email" required>
+	      </div>
+	      <div *ngIf="formErrors.email">
+			    {{ formErrors.email }}
+			  </div>
+	      <div class="form-group">
+	        <label for="pwd" class="form-heading">Password:</label>
+	        <input type="password" class="form-control" formControlName="password" required>
+	      </div>
+	      <div *ngIf="formErrors.password">
+    			{{ formErrors.password }}
+  			</div>
+	      <div class="form-group">
+	        <label for="num" class="form-heading">Contact number:</label>
+	        <input type="tel" class="form-control" id="contact-number" formControlName="contactNumber" required>
+	      </div>
+	      <button type="submit" class="btn btn-default btn-login" [disabled]="!signUpForm.valid">Sign up</button>
+	      <span *ngIf="signUpForm.valid" >Form is valid</span>
+	      <p style="text-align: center; padding-top: 10px;" >Got Account?<a class="form-actions" routerLink="/login"> Log in.</a></p>
+	    </form>
+	    </div>
+	  </div>
+	</div>
+</div>

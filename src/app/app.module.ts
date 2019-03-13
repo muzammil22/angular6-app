@@ -15,9 +15,12 @@ import { LoginLayoutComponent } from './login-layout/login-layout.component';
 import { HomeLayoutComponent } from './home-layout/home-layout.component';
 import { CustomersComponent } from './customers/customers.component';
 import { HomeComponent } from './home/home.component';
-import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CustomerService } from './customer.service'
+import { CampaignService } from './campaign.service'
+import { AuthGuardService } from './auth/auth-guard.service'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { VoucherComponent } from './voucher/voucher.component';
+import { SignupComponent } from './signup/signup.component';
 
 var config = {
     apiKey: "AIzaSyDGZz5JIGHUVx0TKcHjxX8BpXWrl-LVAAA",
@@ -39,7 +42,8 @@ var config = {
     HomeLayoutComponent,
     CustomersComponent,
     HomeComponent,
-    CustomerListComponent
+    VoucherComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +56,7 @@ var config = {
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [CustomerService],
+  providers: [CustomerService, CampaignService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

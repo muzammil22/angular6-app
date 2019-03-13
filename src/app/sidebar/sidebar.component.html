@@ -14,18 +14,18 @@
         <a routerLink="campaigns">Campaigns</a>
     </li>
     <li>
-        <a routerLink="#">Vouchers</a>
+        <a routerLink="voucher">Vouchers</a>
     </li>
 
     <div class="bottom-nav">
       <li>
-          <a href="#">My Account</a>
+          <a href="">My Account</a>
       </li>
       <li>
-          <a href="#">Help</a>
+          <a href="">Help</a>
       </li>
       <li>
-          <a href="#">Log Out</a>
+          <a (click)="authService.logout()">Log Out</a>
       </li>
     </div>
   </ul>

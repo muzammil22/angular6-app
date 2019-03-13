@@ -1,3 +1,118 @@
-<p>
-  campaigns works!
-</p>
+<div id="content">
+
+  <!-- Top Bar -->
+  <div class="container-fluid top-bar">
+    <div class="row" class="d-flex justify-content-between">
+      <div class="col-sm-4" style="text-align: center; padding-top: 5px;" >
+        Campaings: {{campaignArray.length}}
+      </div>
+      <div class="col-sm-4 add_campaign" style="text-align: right; padding-top: 5px;">
+        <button class="btn btn-lg btn-outline-primary add_campaign" (click)="open(campaignModal)">Add Campaign</button>
+      </div>
+      <div class="col-sm-4">
+        <form class="form-inline">
+          <input class="form-control" name="searchInput" placeholder="Search" #searchInput="ngModel" [(ngModel)]="searchText">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-info" *ngIf="showSuccessMessage">
+    Submit Successfully
+  </div>
+
+  <!-- Modal code --> 
+  <ng-template #campaignModal let-modal>
+    <div class="campaign_modal">
+      <div class="modal-body">
+        <form [formGroup]="this.campaignService.form" (ngSubmit)="onSubmit()">
+          <input type="hidden" formControlName="id">
+          <div class="form-group" formGroupName="campaignInfo">
+            <label>Name:</label>
+            <input formControlName="name" type="text" class="form-control">
+          </div>
+          <div class="form-group" formGroupName="campaignInfo">
+            <label>Campaign date:</label>
+            <input formControlName="publishDate" type="date" class="form-control">
+          </div>
+          <div class="form-group" formGroupName="campaignInfo">
+            <label>Voucher expires:</label>
+            <input formControlName="voucherExpiration" type="date" class="form-control">
+          </div>
+          <div class="form-group" formGroupName="campaignInfo">
+            <label>Voucher Value (RM):</label>
+            <input formControlName="voucherValue" type="number" class="form-control" >
+          </div>
+          <div class="form-group" formGroupName="email">
+            <label>Email Title:</label>
+            <textarea style="height: 70px" formControlName="title" type="text" class="form-control"></textarea>
+          </div>
+          <div class="form-group" formGroupName="email">
+            <label>Email body (Skip salutation):</label>
+            <textarea style="height: 100px"  formControlName="body" type="text" class="form-control"></textarea>
+          </div>
+          <div class="form-group" formGroupName="email">
+            <label>Sign off:</label>
+            <textarea style="height: 70px" formControlName="signOff" type="text" class="form-control"></textarea>
+          </div>
+          <button type="submit" value="submit" class="btn custom_btn" >Save</button>
+          <p style="text-align: center; padding-top: 10px;">
+              <button class="btn btn-lg  cancel_form_btn" style="text-align: center;" (click)="modal.dismiss('Cross click')">Cancel</button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Default Campaign -->
+
+  <div class="container default_campaigns">
+    <div class="row">
+      <div class="col">Welcome</div>
+      <div class="col">When Customer Signs Up</div>
+      <div class="col">Active</div>
+      <div class="col">
+        <input type="checkbox" checked data-toggle="toggle" data-size="mini">
+      </div>
+    </div><br/>
+    <div class="row">                   
+      <div class="col">Birthday</div>
+      <div class="col">On Customer's birthday</div>
+      <div class="col">Inactive</div>
+      <div class="col">
+        <input type="checkbox" checked data-toggle="toggle" data-size="mini">
+      </div>
+    </div>
+      
+  </div>
+
+  <!-- Table code -->
+  <div class="container">
+    <table class="table table-sm list_heading">
+      <thead>
+        <th colspan="3">Name</th>
+        <th colspan="3">Date</th>
+        <th colspan="3">Status</th>
+        <th colspan="3"></th>
+      </thead>
+      <ng-container *ngFor="let campaign of campaignArray">
+        <tr class="list_elements" *ngIf="filterCondition(campaign)" >
+          <td colspan="3">{{campaign.campaignInfo.name}}</td>
+          <td colspan="3">{{campaign.campaignInfo.publishDate}}</td>
+          <td colspan="3">{{campaign.status}}</td>
+          <td colspan="3">
+            <button class="btn no_background_button" (click)="onDelete(campaign.id)">Delete</button>
+            
+            <button class="btn no_background_button" style="margin-left: 15px;" (click)="Edit(campaign,campaignModal)">Edit</button>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+    <div class="alert alert-danger" *ngIf="showDeletedMessage">
+      Deleted successfully.
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+        
+</div>

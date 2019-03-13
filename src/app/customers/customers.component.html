@@ -2,14 +2,14 @@
 
   <!-- Top Bar -->
   <div class="container-fluid top-bar">
-    <div class="row">
-      <div class="col-sm-5 col-md-6" style="padding-left: 100px;" >
-        Customers:12344
+    <div class="row" class="d-flex justify-content-between">
+      <div class="col-sm-4" style="text-align: center; padding-top: 5px;" >
+        Customers: {{customerArray.length}}
       </div>
-      <div class="col-sm-5 col-sm-offset-2 add_customer">
+      <div class="col-sm-4 add_customer" style="text-align: right; padding-top: 5px;">
         <button class="btn btn-lg btn-outline-primary add_customer" (click)="open(customerModal)">Add Customer</button>
       </div>
-      <div class="col-sm-5 col-sm-offset-2 add_customer">
+      <div class="col-sm-4">
         <form class="form-inline">
           <input class="form-control" name="searchInput" placeholder="Search" #searchInput="ngModel" [(ngModel)]="searchText">
         </form>

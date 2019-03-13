@@ -1,6 +1,15 @@
-<div id="container">
+<div *ngIf="authService.isLoggedIn; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+	<div id="container" >
 	<app-navigation></app-navigation>
 	<div id="content">
 		<router-outlet></router-outlet>
 	</div>
 </div>
+</ng-template>
+
+<ng-template #elseBlock>
+	<div id="content">
+		<router-outlet></router-outlet>
+	</div>
+</ng-template>

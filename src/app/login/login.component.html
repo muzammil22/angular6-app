@@ -7,14 +7,14 @@
       <div class="form-box">
         <div class="form-group">
           <label for="email" class="form-heading">Email:</label>
-          <input type="email" class="form-control" id="email">
+          <input type="email" class="form-control" #userEmail required autofocus>
         </div>
         <div class="form-group">
           <label for="pwd" class="form-heading">Password:</label>
-          <input type="password" class="form-control" id="pwd">
+          <input type="password" class="form-control" #userPassword required>
         </div>
-        <button type="submit" class="btn btn-default btn-login">Log In</button>
-        <p style="text-align: center; padding-top: 10px;">Need Account?<a class="form-actions"> Create Account.</a></p>
+        <button type="submit" class="btn btn-default btn-login" (click)="authService.login(userEmail.value, userPassword.value)">Log In</button>
+        <p style="text-align: center; padding-top: 10px;">Need Account?<a class="form-actions" routerLink="/signup"> Create Account.</a></p>
         <p style="text-align: center;">Forgot password?<a class="form-actions"> Reset Password.</a></p>
       </div>
     </div>
