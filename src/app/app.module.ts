@@ -4,23 +4,29 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { UsersComponent } from './users/users.component';
+import { UserComponent } from './user/user.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { HttpClientModule } from '@angular/common/http'
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore"
 import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFireStorageModule } from "angularfire2/storage"
 import { LoginComponent } from './login/login.component';
-import { LoginLayoutComponent } from './login-layout/login-layout.component';
-import { HomeLayoutComponent } from './home-layout/home-layout.component';
 import { CustomersComponent } from './customers/customers.component';
 import { HomeComponent } from './home/home.component';
 import { CustomerService } from './customer.service'
-import { CampaignService } from './campaign.service'
-import { AuthGuardService } from './auth/auth-guard.service'
+import { CampaignService } from './campaign.service';
+import { UserService } from './user.service';
+import { AuthGuardService } from './auth/auth-guard.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { VoucherComponent } from './voucher/voucher.component';
 import { SignupComponent } from './signup/signup.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSlideToggleModule } from '@angular/material';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { DefaultCampaignFormComponent } from './default-campaign-form/default-campaign-form.component';
+
 
 var config = {
     apiKey: "AIzaSyDGZz5JIGHUVx0TKcHjxX8BpXWrl-LVAAA",
@@ -35,15 +41,15 @@ var config = {
   declarations: [
     AppComponent,
     SidebarComponent,
-    UsersComponent,
+    UserComponent,
     CampaignsComponent,
     LoginComponent,
-    LoginLayoutComponent,
-    HomeLayoutComponent,
     CustomersComponent,
     HomeComponent,
     VoucherComponent,
-    SignupComponent
+    SignupComponent,
+    LoadingSpinnerComponent,
+    DefaultCampaignFormComponent
   ],
   imports: [
     BrowserModule,
@@ -54,9 +60,13 @@ var config = {
     AngularFirestoreModule,
     NgbModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    AngularFireStorageModule
   ],
-  providers: [CustomerService, CampaignService, AuthGuardService],
+  providers: [CustomerService, CampaignService, AuthGuardService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

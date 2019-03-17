@@ -10,11 +10,12 @@ export class CampaignService {
 
   constructor(private firestore: AngularFirestore) {} 
   campaignList: AngularFirestoreCollection<any>;
+  defaultCampaignList: AngularFirestoreCollection<any>;
 
 	form = new FormGroup({
 		id: new FormControl(null),
 		campaignInfo: new FormGroup ({
-			name: new FormControl(''),
+			name: new FormControl('', Validators.required),
 			publishDate: new FormControl(''),
 			voucherExpiration: new FormControl(''),
 			voucherValue: new FormControl('')
@@ -34,12 +35,34 @@ export class CampaignService {
 		return this.campaignList.snapshotChanges();
 	}
 
+  getDefaultCampaigns() {
+    this.defaultCampaignList = this.firestore.collection('defaultCampaigns');
+    return this.defaultCampaignList.snapshotChanges();
+  }
+
   insertCampaign(campaign) {
     this.campaignList.add(campaign);
   }
 
   populateForm(campaign) {
+    if (typeof(campaign.campaignInfo.voucherExpiration) != "string")
+      campaign.campaignInfo.voucherExpiration = this.convertDateToString(campaign.campaignInfo.voucherExpiration);
+    if (typeof(campaign.campaignInfo.publishDate) != "string")
+      campaign.campaignInfo.publishDate = this.convertDateToString(campaign.campaignInfo.publishDate);
     this.form.setValue(campaign);
+  }
+
+  convertDateToString(date){
+    console.log(date)
+    var day = date.getDate();
+    if (day < 10)
+      day = '0' + day;
+    var month = date.getMonth() + 1;
+    if (month < 10)
+      month = '0' + month
+    var year = date.getFullYear();
+
+    return `${year}-${month}-${day}`;
   }
 
   updateCampaign(campaign) {

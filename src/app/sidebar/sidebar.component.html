@@ -5,21 +5,21 @@
 
   <ul class="list-unstyled components">
     <li class="active">
-        <a routerLink="">Home</a>
+        <a (click)=changeActive(home) #home routerLink="">Home</a>
     </li>
     <li>
-        <a routerLink="customers">Customers</a>
+        <a (click)=changeActive(customers) #customers routerLink="customers">Customers</a>
     </li>
     <li>
-        <a routerLink="campaigns">Campaigns</a>
+        <a (click)=changeActive(campaigns) #campaigns routerLink="campaigns">Campaigns</a>
     </li>
     <li>
-        <a routerLink="voucher">Vouchers</a>
+        <a (click)=changeActive(vouchers) #vouchers routerLink="voucher">Vouchers</a>
     </li>
 
     <div class="bottom-nav">
       <li>
-          <a href="">My Account</a>
+          <a (click)=changeActive(myaccount) #myaccount routerLink="user">My Account</a>
       </li>
       <li>
           <a href="">Help</a>

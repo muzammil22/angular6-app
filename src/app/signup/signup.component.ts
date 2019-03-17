@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../auth/auth.service";
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { User } from  'firebase';
 
 @Component({
   selector: 'app-signup',
@@ -12,8 +14,9 @@ export class SignupComponent implements OnInit {
 	signUpForm: FormGroup;
   newUser: boolean = true; // to toggle login or signup form
   passReset: boolean = false;
+  user: User;
 
-  constructor(private fb: FormBuilder, private auth: AuthService) { }
+  constructor(private fb: FormBuilder, private auth: AuthService, private firestore: AngularFirestore) { }
 
   ngOnInit() {
   	this.buildForm();
@@ -24,7 +27,6 @@ export class SignupComponent implements OnInit {
    }
 
   signup(): void {
-  	console.log("signup");
     this.auth.emailSignUp(this.signUpForm.value)
   }
 
@@ -63,19 +65,19 @@ export class SignupComponent implements OnInit {
 
    // Updates validation state on form changes.
    onValueChanged(data?: any) {
-     if (!this.signUpForm) { return; }
-     const form = this.signUpForm;
-     for (const field in this.formErrors) {
-       // clear previous error message (if any)
-       this.formErrors[field] = '';
-       const control = form.get(field);
-       if (control && control.dirty && !control.valid) {
-         const messages = this.validationMessages[field];
-         for (const key in control.errors) {
-           this.formErrors[field] += messages[key] + ' ';
-         }
-       }
-     }
+     // if (!this.signUpForm) { return; }
+     // const form = this.signUpForm;
+     // for (const field in this.formErrors) {
+     //   // clear previous error message (if any)
+     //   this.formErrors[field] = '';
+     //   const control = form.get(field);
+     //   if (control && control.dirty && !control.valid) {
+     //     const messages = this.validationMessages[field];
+     //     for (const key in control.errors) {
+     //       this.formErrors[field] += messages[key] + ' ';
+     //     }
+     //   }
+     // }
    }
 
   formErrors = {

@@ -1,0 +1,60 @@
+<div id="content">
+
+  <!-- Top Bar -->
+  <div class="container-fluid top-bar">
+    <div class="row" class="d-flex justify-content-between">
+      <div class="col-sm-6" style="text-align: left; " >
+        My Account
+      </div>
+      <div class="col-sm-6" style="text-align: right;">
+        <button class="btn btn-lg custom_btn" (click)="open(customerModal)">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-info" *ngIf="showSuccessMessage">
+    Submit Successfully
+  </div>
+
+
+  <!-- Table code -->
+  <form [formGroup]="this.userService.form" (ngSubmit)="onSubmit()">
+    <input type="hidden" formControlName="id">
+    <div class="container account_details">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          Name:
+          <input formControlName="name" class="form-control column" disabled>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          Company Name:
+          <input formControlName="companyName" class="form-control column" disabled>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          Email:
+          <input formControlName="email" type="email" class="form-control column" disabled>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          Contact Number:
+          <input formControlName="contactNumber" type="tel" class="form-control column" disabled>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          Plan:
+          <input class="form-control column" disabled>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <router-outlet></router-outlet>
+        
+</div>

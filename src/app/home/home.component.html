@@ -7,7 +7,9 @@
         Your Metrics:
       </div>
       <div class="col">
-        <img src="./assets/customermetric.svg" alt="LOGO">12345
+        <div>
+          <img style="margin-right: 5px;" src="./assets/customermetric.svg" alt="LOGO">{{customerArray.length}}
+        </div>
       </div>
       <div class="col">
         <img src="./assets/vouchermetric.svg" alt="LOGO">12345
@@ -22,27 +24,27 @@
   <div class="container quick-start">
     Quick Start:
     <div class="columns">
-      <div class="column quick-start-button quick-start-img">
-        <a routerLink="customers">
+      <a routerLink="customers" class="column quick-start-button quick-start-img">
+        <div>
           <img src="./assets/customer.svg" alt="LOGO"><br/>
           <p class="quick-start-heading">Add Customer</p>
           <p class="quick-start-text">Add to your contact book</p>
-        </a>
-      </div>
-      <div class="column quick-start-button quick-start-img">
-        <a routerLink="voucher">
+        </div>
+      </a>
+      <a routerLink="voucher" class="column quick-start-button quick-start-img">
+        <div>
           <img src="./assets/voucher.svg" alt="LOGO"><br/>
           <p class="quick-start-heading">Process Voucher</p>
           <p class="quick-start-text">Process a customer voucher</p>
-        </a>
-      </div>
-      <div class="column quick-start-button quick-start-img">
-        <a routerLink="campaigns">
+        </div>
+      </a>
+      <a routerLink="campaigns" class="column quick-start-button quick-start-img">
+        <div>
           <img src="./assets/campaign.svg" alt="LOGO"><br/>
           <p class="quick-start-heading">Create Campaign</p>
           <p class="quick-start-text">Schedule a campaign</p>
-        </a>
-      </div>
+        </div>
+      </a>
     </div>
   </div>
 

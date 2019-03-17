@@ -32,7 +32,7 @@ export class AuthService {
 
 	try {
 	    await  this.afAuth.auth.signInWithEmailAndPassword(email, password)
-	    this.router.navigate(['campaigns']);
+	    this.router.navigate(['']);
 	} catch (e) {
 	    alert("Error!"  +  e.message);
 	}
@@ -52,9 +52,14 @@ export class AuthService {
   emailSignUp(credential: EmailPasswordCredentials) {
     return this.afAuth.auth
       .createUserWithEmailAndPassword(credential.email, credential.password)
-      .then(() =>{
-        console.log("success");
-        this.router.navigate(['customers']);
+      .then((user) =>{
+        console.log("success", user.user.uid);
+        //insert addition data in users collectoin
+        let data = Object.assign({}, credential);
+        delete data.password
+        this.afs.collection("users_temp").doc(user.user.uid).set(data);
+
+        this.router.navigate(['']);
       })
       .catch(error => console.log(error))
   }
@@ -62,9 +67,9 @@ export class AuthService {
 }
 
 export class EmailPasswordCredentials {
-  name: string;
   companyName: string;
   contactNumber: string;
   email: string;
+  name: string;
   password: string;
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbDate, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from '../customer.service';
 import { AngularFirestore } from '@angular/fire/firestore';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-customers',
@@ -18,6 +19,7 @@ export class CustomersComponent implements OnInit {
   customerArray = [];
   showDeletedMessage: boolean;
   searchText: string = "";
+  myDate = new Date();
 
   constructor(private modalService: NgbModal, private customerService: CustomerService, 
   	private firestore: AngularFirestore) {}
@@ -28,19 +30,17 @@ export class CustomersComponent implements OnInit {
         this.customerArray = list.map(item => {
           return {
             id: item.payload.doc.id,
-            ...item.payload.doc.data()
+            birthDate : new Date(item.payload.doc.data().birthDate.seconds * 1000),
+            name : item.payload.doc.data().name,
+            email : item.payload.doc.data().email,
+            contactNumber : item.payload.doc.data().contactNumber
           }
         });
       });
   }
 
   open(modalcontent) {
-    this.modalReference = this.modalService.open(modalcontent, {ariaLabelledBy: 'modal-basic-title'})
-    // this.modalReference.result.then((result) => {
-    //   this.closeResult = `Closed with: ${result}`;
-    // }, (reason) => {
-    //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    // });
+    this.modalReference = this.modalService.open(modalcontent, {ariaLabelledBy: 'modal-basic-title', backdrop: 'static'})
   }
 
   private getDismissReason(reason: any): string {
@@ -55,27 +55,20 @@ export class CustomersComponent implements OnInit {
 
   onSubmit(){
 	  this.submitted = true;
-    let data = Object.assign({ accountType: { customer: true, merchant: false } }, this.customerService.form.value);
+    let data = Object.assign({userId: ""}, this.customerService.form.value);
     delete data.id;
+    data.birthDate =  new Date(Date.parse(data.birthDate));
     if (this.customerService.form.valid && this.customerService.form.value.id == null)
       this.customerService.insertCustomer(data);
     else {
       console.log("updated");
-      this.firestore.doc('users/' + this.customerService.form.value.id).update(data);
-       // this.customerService.updateCustomer(data);
+      this.firestore.doc('customers/' + this.customerService.form.value.id).update(data);
     }
     this.showSuccessMessage = true;
     setTimeout(() => this.showSuccessMessage = false, 3000);
     this.submitted = false;
     this.modalReference.dismiss();
     this.customerService.form.reset();
-    this.customerService.form.setValue({
-      id: null,
-      name: '',
-      email: '',
-      contactNumber: ''
-    });
-  
   }
 
   onDelete(id) {
@@ -87,8 +80,13 @@ export class CustomersComponent implements OnInit {
   }
 
   onEdit(customer, modalcontent) {
-    this.modalReference = this.modalService.open(modalcontent, {ariaLabelledBy: 'modal-basic-title'})
+    this.modalReference = this.modalService.open(modalcontent, {ariaLabelledBy: 'modal-basic-title', backdrop: 'static'})
     this.customerService.populateForm(customer);
+  }
+
+  onCancel(){
+    this.modalReference.dismiss();
+    this.customerService.form.reset();
   }
 
   filterCondition(customer) {
