@@ -3,11 +3,11 @@
   <!-- Top Bar -->
   <div class="container-fluid top-bar">
     <div class="row" class="d-flex justify-content-between">
-      <div class="col-sm-4" style="text-align: center; padding-top: 5px;" >
-        Campaings: {{campaignArray.length}}
+      <div class="col-sm-4 top_bar_heading" >
+        Campaigns: {{campaignArray.length}}
       </div>
-      <div class="col-sm-4 add_campaign" style="text-align: right; padding-top: 5px;">
-        <button class="btn btn-lg add_campaign" (click)="open(campaignModal)">Add campaign</button>
+      <div class="col-sm-4 add_campaign top_bar_add_button">
+        <button class="btn btn-lg add_campaign" (click)="createCampaign(campaignModal)">Add campaign</button>
       </div>
       <div class="col-sm-4">
         <form class="form-inline">
@@ -18,85 +18,29 @@
   </div>
 
   <div class="alert alert-info" *ngIf="showSuccessMessage">
-    Submit Successfully
+    Submit Successfully.
+  </div>
+  <div class="alert alert-danger" *ngIf="showDeletedMessage">
+    Deleted successfully.
+  </div>
+  <div class="alert alert-warning" *ngIf="alreadyExist">
+    Campaign already exists.
   </div>
 
-  
-    <!-- Modal code --> 
-  <ng-template #campaignModal let-modal>
-    <div class="campaign_modal">
-      <div class="modal-body">
-        <form [formGroup]="this.campaignService.form" (ngSubmit)="onSubmit()">
-          <input type="hidden" formControlName="id">
-          <div class="form-group" formGroupName="campaignInfo">
-            <label>Campaign name (internal reference only):</label>
-            <input formControlName="name" type="text" class="form-control">
-          </div>
-          <div class="form-group" formGroupName="campaignInfo">
-            <label>Campaign date:</label>
-            <input formControlName="publishDate" type="date" class="form-control">
-          </div>
-          <div class="form-group" formGroupName="campaignInfo">
-            <label>Voucher expires:</label>
-            <input formControlName="voucherExpiration" type="date" class="form-control">
-          </div>
-          <div class="form-group" formGroupName="campaignInfo">
-            <label>Voucher value (RM):</label>
-            <input formControlName="voucherValue" type="number" class="form-control" >
-          </div>
-          <div class="form-group" formGroupName="email">
-            <label>Image:</label>
-            <label class="myLabel form-control">
-              <input #imageInput type="file" class="form-control" (change)="startUpload(imageInput)">
-              <span *ngIf="fileName" class="file_name">{{fileName}}</span>
-              <div *ngIf="percentage | async as pct" style="width: 100%">
-                <progress [value]="pct" max="100"></progress>
-              </div>
-              <span class="upload_btn">Upload</span>
-            </label>
-            <div *ngIf="!isEditting;else existing_image ">
-              <div *ngIf="downloadURL | async as url">
-                <img [src]="url" class="image_dimensions" id="imgurl">
-                <input class="form-control" type="hidden" [value]="url" formControlName="image">
-              </div>
-            </div>
-            <ng-template #existing_image>
-              <img [src]="imageUrl" class="image_dimensions" id="imgurl">
-            </ng-template>
-          </div>
-          <div class="form-group" formGroupName="email">
-            <label>Email title:</label>
-            <textarea style="height: 70px" formControlName="title" type="text" class="form-control"></textarea>
-          </div>
-          <div class="form-group" formGroupName="email">
-            <label>Email body (Skip salutation):</label>
-            <textarea style="height: 100px"  formControlName="body" type="text" class="form-control"></textarea>
-          </div>
-          <div class="form-group" formGroupName="email">
-            <label>Sign off:</label>
-            <textarea style="height: 70px" formControlName="signOff" type="text" class="form-control"></textarea>
-          </div>
-          <button type="submit" value="submit" class="btn custom_btn" >Save</button>
-          <p style="text-align: center; padding-top: 10px;">
-              <button class="btn btn-lg  cancel_form_btn" style="text-align: center;" (click)="onCancel()">Cancel</button>
-          </p>
-        </form>
-      </div>
-    </div>
-  </ng-template>
-
   <!-- Default Campaign -->
-
-  <div class="container default_campaigns">
+  <div *ngIf="showSpinner" style="position:fixed;top:50%;left:50%">
+    <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+  </div>
+  <div class="container default_campaigns" *ngIf="!showSpinner">
     <table class="table table-sm list_heading">
       <ng-container *ngFor="let campaign of defaultCampaignArray">
-        <tr class="list_elements" *ngIf="filterCondition(campaign)" >
-          <td colspan="3">{{campaign.campaignInfo.name}}</td>
-          <td colspan="3">{{campaign.campaignReason}}</td>
+        <tr class="list_elements" >
+          <td colspan="6">{{campaign.campaignInfo.name}}</td>
+          <!-- <td colspan="3"></td> -->
           <td colspan="3">{{campaign.activeStatus ? 'Active' : 'Inactive'}}</td>
           <td colspan="3">
             <mat-slide-toggle (change)=toggleDefaultCampaign(campaign) [checked]=campaign.activeStatus class="custom_font"></mat-slide-toggle>
-            <button class="btn no_background_button" style="margin-left: 15px;" (click)="Edit(campaign,campaignModal)">Edit</button>
+            <button class="btn no_background_button" style="margin-left: 15px;" (click)="editDefaultCampaign(campaign)">Edit</button>
           </td>
         </tr>
       </ng-container>
@@ -104,8 +48,8 @@
   </div>
 
   <!-- Table code -->
-  <div class="container">
-    <table class="table table-sm list_heading">
+  <div class="container" *ngIf="!showSpinner">
+    <table class="table table-sm list_heading list_propertise">
       <thead>
         <th colspan="3">Name</th>
         <th colspan="3">Date</th>
@@ -116,20 +60,22 @@
         <tr class="list_elements" *ngIf="filterCondition(campaign)" >
           <td colspan="3">{{campaign.campaignInfo.name}}</td>
           <td colspan="3">{{campaign.campaignInfo.publishDate | date:'d MMM y'}}</td>
-          <td colspan="3">{{campaign.status}}</td>
-          <td colspan="3">
+          <td colspan="3">{{campaign.campaignInfo.publishDate < currentDate ? 'Sent' : 'Scheduled'}}</td>
+          <td colspan="3" *ngIf="!(campaign.campaignInfo.publishDate < currentDate)">
             <button class="btn no_background_button" (click)="onDelete(campaign.id)">Delete</button>
             
-            <button class="btn no_background_button" style="margin-left: 15px;" (click)="Edit(campaign,campaignModal)">Edit</button>
+            <button class="btn no_background_button" style="margin-left: 15px;" (click)="editCampaign(campaign,campaignModal)">Edit</button>
+          </td>
+          <td colspan="3" *ngIf="campaign.campaignInfo.publishDate < currentDate">
+            318 Redeemed
           </td>
         </tr>
       </ng-container>
     </table>
-    <div class="alert alert-danger" *ngIf="showDeletedMessage">
-      Deleted successfully.
-    </div>
+    
   </div>
 
+  
   <router-outlet></router-outlet>
         
 </div>

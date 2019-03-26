@@ -16,19 +16,36 @@ export class CampaignService {
 		id: new FormControl(null),
 		campaignInfo: new FormGroup ({
 			name: new FormControl('', Validators.required),
-			publishDate: new FormControl(''),
-			voucherExpiration: new FormControl(''),
-			voucherValue: new FormControl('')
+			publishDate: new FormControl('', Validators.required),
+			voucherExpiration: new FormControl('', Validators.required),
+			voucherValue: new FormControl('', Validators.required)
 		}),
 		email: new FormGroup ({
-			body: new FormControl(''),
+			body: new FormControl('', Validators.required),
 			image: new FormControl(''),
-			signOff: new FormControl(''),
-			title: new FormControl('')
+			signOff: new FormControl('', Validators.required),
+			title: new FormControl('', Validators.required)
 		}),
-		userId: new FormControl(''),
-		status: new FormControl('')
+		userId: new FormControl('')
 	});
+
+  defaultCampaignForm = new FormGroup({
+    id: new FormControl(null),
+    campaignInfo: new FormGroup ({
+      name: new FormControl('', Validators.required),
+      publishDate: new FormControl(''),
+      voucherExpiration: new FormControl(''),
+      voucherValue: new FormControl('')
+    }),
+    email: new FormGroup ({
+      body: new FormControl(''),
+      image: new FormControl(''),
+      signOff: new FormControl(''),
+      title: new FormControl('')
+    }),
+    userId: new FormControl(''),
+    activeStatus: new FormControl('')
+  });
 
 	getCampaigns() {
 		this.campaignList = this.firestore.collection('campaigns');
@@ -50,6 +67,14 @@ export class CampaignService {
     if (typeof(campaign.campaignInfo.publishDate) != "string")
       campaign.campaignInfo.publishDate = this.convertDateToString(campaign.campaignInfo.publishDate);
     this.form.setValue(campaign);
+  }
+
+  populateDefaultCampaignForm(campaign) {
+    if (typeof(campaign.campaignInfo.voucherExpiration) != "string")
+      campaign.campaignInfo.voucherExpiration = this.convertDateToString(campaign.campaignInfo.voucherExpiration);
+    if (typeof(campaign.campaignInfo.publishDate) != "string")
+      campaign.campaignInfo.publishDate = this.convertDateToString(campaign.campaignInfo.publishDate);
+    this.defaultCampaignForm.setValue(campaign);
   }
 
   convertDateToString(date){

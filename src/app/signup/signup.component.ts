@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../auth/auth.service";
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { User } from  'firebase';
+import { Router } from  "@angular/router";
+import { CampaignService } from '../campaign.service';
+
 
 @Component({
   selector: 'app-signup',
@@ -15,11 +18,20 @@ export class SignupComponent implements OnInit {
   newUser: boolean = true; // to toggle login or signup form
   passReset: boolean = false;
   user: User;
+  errorMessage: string;
+  showErrorMessage: boolean = false;
+  isValid:boolean = true;
+  signupBtnClicked: boolean = false;
+  showSpinner: boolean = false;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private firestore: AngularFirestore) { }
+  constructor(private campaignService: CampaignService, private fb: FormBuilder, private auth: AuthService, private firestore: AngularFirestore,  public router: Router) { }
 
   ngOnInit() {
+    if (this.auth.isLoggedIn) {
+      this.router.navigate(['']);
+    }
   	this.buildForm();
+    this.campaignService.getDefaultCampaigns();
   }
 
   toggleForm(): void {
@@ -27,7 +39,72 @@ export class SignupComponent implements OnInit {
    }
 
   signup(): void {
-    this.auth.emailSignUp(this.signUpForm.value)
+    this.onValueChanged(this.signUpForm.value)
+    if (this.isValid){
+      this.showSpinner = true;
+      this.signupBtnClicked = true;
+      var message = this.auth.emailSignUp(this.signUpForm.value).then((user) =>{
+          console.log("success", user.user.uid);
+          //insert additional data in merchants collectoin
+          let data = Object.assign({userId: user.user.uid}, this.signUpForm.value);
+          delete data.password
+          this.firestore.collection("merchants").doc(user.user.uid).set(data);
+          this.createDefaultCampaigns(user.user.uid);
+          this.signupBtnClicked = false;
+          this.showSpinner = false;
+          this.router.navigate(['']);
+        })
+        .catch(error => {
+          this.errorMessage = error.message;
+          this.showErrorMessage = true;
+          setTimeout(() => this.showErrorMessage = false, 3000);
+          console.log("error:", error.message);
+          this.showSpinner = false;
+          this.signupBtnClicked = false;
+        })
+    }
+
+  }
+
+  private createDefaultCampaigns(userId){
+    let welcomeCampaign = Object.assign ({},{
+        campaignInfo:  {
+          campaignType: 'customerWelcome',
+          name: 'Welcome',
+          publishDate: new Date(),
+          voucherExpiration: new Date(),
+          voucherValue: 25
+        },
+        email:  {
+          body:'welcome' ,
+          image: "",
+          signOff: 'welcome',
+          title: 'welcome'
+        },
+        activeStatus: false,
+        userId: userId 
+      })
+
+    let birthdayCampaign = Object.assign ({}, {
+        campaignInfo:  {
+          name: 'Birthday',
+          campaignType: 'birthday',
+          publishDate: new Date(),
+          voucherExpiration: new Date(),
+          voucherValue: 25
+        },
+        email:  {
+          body:'birthday' ,
+          image: "",
+          signOff: 'birthday',
+          title: 'birthday'
+        },
+        activeStatus: false,
+        userId: userId
+    })
+    
+    this.campaignService.defaultCampaignList.add(welcomeCampaign);
+    this.campaignService.defaultCampaignList.add(birthdayCampaign);
   }
 
 
@@ -45,10 +122,12 @@ export class SignupComponent implements OnInit {
 	      	]
      		],
      		'name': ['', [
+          Validators.required,
 	        Validators.maxLength(25)
 	      	]
      		],
      		'companyName': ['', [
+         Validators.required,
 	        Validators.maxLength(25)
 	      	]
      		],
@@ -59,30 +138,35 @@ export class SignupComponent implements OnInit {
      		],
      });
 
-     this.signUpForm.valueChanges.subscribe(data => this.onValueChanged(data));
-     this.onValueChanged(); // reset validation messages
+     // this.signUpForm.valueChanges.subscribe(data => this.onValueChanged(data));
+     // this.onValueChanged(); // reset validation messages
    }
 
    // Updates validation state on form changes.
    onValueChanged(data?: any) {
-     // if (!this.signUpForm) { return; }
-     // const form = this.signUpForm;
-     // for (const field in this.formErrors) {
-     //   // clear previous error message (if any)
-     //   this.formErrors[field] = '';
-     //   const control = form.get(field);
-     //   if (control && control.dirty && !control.valid) {
-     //     const messages = this.validationMessages[field];
-     //     for (const key in control.errors) {
-     //       this.formErrors[field] += messages[key] + ' ';
-     //     }
-     //   }
-     // }
+     this.isValid = true;
+     if (!this.signUpForm) { return; }
+     const form = this.signUpForm;
+     for (const field in this.formErrors) {
+       // clear previous error message (if any)
+       this.formErrors[field] = '';
+       const control = form.get(field);
+       if (control && control.errors && !control.valid) {
+         if (this.isValid == true)
+           this.isValid = false 
+         const messages = this.validationMessages[field];
+         for (const key in control.errors) {
+           this.formErrors[field] += messages[key] + ' ';
+         }
+       }
+     }
    }
 
   formErrors = {
      'email': '',
-     'password': ''
+     'password': '',
+     'companyName': '',
+     'name': ''
    };
 
    validationMessages = {
@@ -95,6 +179,12 @@ export class SignupComponent implements OnInit {
        'pattern':       'Password must be include at one letter and one number.',
        'minlength':     'Password must be at least 4 characters long.',
        'maxlength':     'Password cannot be more than 40 characters long.',
+     },
+     'companyName': {
+       'required':      'Company name is required'
+     },
+     'name': {
+       'required':      'Name is required'
      }
    };
 

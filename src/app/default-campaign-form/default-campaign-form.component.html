@@ -1,12 +1,74 @@
-<div class="modal-header">
-  <h4 class="modal-title">Hi there!</h4>
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  <p>Hello, {{name}}!</p>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+<div class="campaign_modal">
+  <div class="modal-body">
+      <form [formGroup]="formType" (ngSubmit)="onSubmit()">
+        <input type="hidden" formControlName="id">
+        <div class="form-group" formGroupName="campaignInfo">
+          <label>Campaign name (internal reference only):</label>
+          <input formControlName="name" type="text" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.campaignInfo.controls.name.errors}">
+          <div class="invalid-feedback" *ngIf="submitted && formControls.campaignInfo.controls.name.errors">
+            This field is required.</div>
+        </div>
+        <div class="form-group" formGroupName="campaignInfo">
+          <label>Campaign date:</label>
+          <input formControlName="publishDate" type="date" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.campaignInfo.controls.publishDate.errors}">
+          <div class="invalid-feedback" *ngIf="submitted && formControls.campaignInfo.controls.publishDate.errors">
+            This field is required.</div>
+        </div>
+        <div class="form-group" formGroupName="campaignInfo">
+          <label>Voucher expires:</label>
+          <input formControlName="voucherExpiration" type="date" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.campaignInfo.controls.voucherExpiration.errors}">
+          <div class="invalid-feedback" *ngIf="submitted && formControls.campaignInfo.controls.voucherExpiration.errors">
+            This field is required.</div>
+        </div>
+        <div class="form-group" formGroupName="campaignInfo">
+          <label>Voucher value (RM):</label>
+          <input formControlName="voucherValue" type="number" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.campaignInfo.controls.voucherValue.errors}">
+          <div class="invalid-feedback" *ngIf="submitted && formControls.campaignInfo.controls.voucherValue.errors">
+            This field is required.</div>
+        </div>
+        <div class="form-group" formGroupName="email">
+          <label>Image:</label>
+          <label class="myLabel form-control">
+            <input #imageInput type="file" class="form-control" accept="image/*" (change)="startUpload(imageInput)">
+            <!-- <span *ngIf="fileName" class="file_name">{{fileName}}</span> -->
+            <div *ngIf="percentage | async as pct" style="width: 100%">
+              <progress [value]="pct" max="100"></progress>
+            </div>
+            <span class="upload_btn">Upload</span>
+          </label>
+          <div *ngIf="!isEditting;else existing_image ">
+            <div *ngIf="downloadURL | async as url">
+              <img [src]="imgUrl" class="image_dimensions" id="imgurl">
+              <input class="form-control" type="hidden" [value]="url" accept="image/*" formControlName="image">
+            </div>
+          </div>
+          <ng-template #existing_image>
+            <img [src]="imgUrl" class="image_dimensions" id="imgurl">
+          </ng-template>
+          <app-loading-spinner *ngIf="showImageUploadSpinner"></app-loading-spinner>
+        </div>
+        <div class="form-group" formGroupName="email">
+          <label>Email title:</label>
+          <textarea style="height: 70px" formControlName="title" type="text" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.email.controls.title.errors}"></textarea>
+          <div class="invalid-feedback" *ngIf="submitted && formControls.email.controls.title.errors">
+            This field is required.</div>
+        </div>
+        <div class="form-group" formGroupName="email">
+          <label>Email body (Skip salutation):</label>
+          <textarea style="height: 100px"  formControlName="body" type="text" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.email.controls.body.errors}"></textarea>
+          <div class="invalid-feedback" *ngIf="submitted && formControls.email.controls.body.errors">
+            This field is required.</div>
+        </div>
+        <div class="form-group" formGroupName="email">
+          <label>Sign off:</label>
+          <textarea style="height: 70px" formControlName="signOff" type="text" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.email.controls.signOff.errors}"></textarea>
+          <div class="invalid-feedback" *ngIf="submitted && formControls.email.controls.signOff.errors">
+            This field is required.</div>
+        </div>
+        <button type="submit" value="submit" class="btn custom_btn" [disabled]="disableSubmittBtn" >Save</button>
+        <p style="text-align: center; padding-top: 10px;">
+            <button class="btn btn-lg  cancel_form_btn" style="text-align: center;" (click)="cancelModal()">Cancel</button>
+        </p>
+      </form>
+    </div>
 </div>

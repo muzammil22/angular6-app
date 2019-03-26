@@ -19,11 +19,12 @@ export class UserService {
     name: new FormControl('', Validators.required),
     companyName: new FormControl('', Validators.required),
     email: new FormControl('', Validators.email),
-    contactNumber: new FormControl('', [Validators.required, Validators.minLength(8)])
+    contactNumber: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    userId: new FormControl('')
   });
 
   getUser() {
-    return this.firestore.collection('users_temp').doc(JSON.parse(localStorage.getItem('user')).uid).ref.get();
+    return this.firestore.collection('merchants').doc(JSON.parse(localStorage.getItem('user')).uid).ref.get();
   }
 
 
@@ -32,26 +33,9 @@ export class UserService {
   }
 
   // updateUser(customer) {
-  //   this.firestore.doc('users/' + this.form.value.id).update(customer);
+  //   this.firestore.doc('merchants/' + this.form.value.id).update(customer);
   // }
 
 }
-
-
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class CustomerService {
-
-  
-
-//   form = new FormGroup({
-//     id: new FormControl(null),
-//     name: new FormControl('', Validators.required),
-//     email: new FormControl('', Validators.email),
-//     contactNumber: new FormControl('', [Validators.required, Validators.minLength(8)]),
-//     birthdate: new FormControl('')
-//   });
 
 

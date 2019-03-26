@@ -7,6 +7,8 @@ import { HomeComponent } from './home/home.component';
 import { CustomersComponent } from './customers/customers.component';
 import { VoucherComponent } from './voucher/voucher.component';
 import { SignupComponent } from './signup/signup.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthGuardService as AuthGuard } from './auth/auth-guard.service';
 
 const routes: Routes = [
@@ -39,8 +41,17 @@ const routes: Routes = [
 		component: LoginComponent
 	},
 	{
+		path: 'reset-password',
+		component: ResetPasswordComponent
+	},
+	{
 		path: 'user',
 		component: UserComponent,
+		canActivate: [AuthGuard]
+	},
+	{
+		path: 'test-nav',
+		component: MainNavComponent,
 		canActivate: [AuthGuard]
 	}
   

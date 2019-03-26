@@ -2,136 +2,19 @@
 
 
 
-.top-bar {
-    padding: 30px 30px;
-    background: #fff;
-    border: none;
-    border-radius: 0;
-    margin-bottom: 40px;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-}
-
-.navbar-btn {
-    box-shadow: none;
-    outline: none !important;
-    border: none;
-}
-
-.line {
-    width: 100%;
-    height: 1px;
-    border-bottom: 1px dashed #ddd;
-    margin: 40px 0;
-}
-
-.navbar .container {
-    margin-bottom: 50px;
-}
-
-.bottom-nav {
-    position: absolute;
-    bottom: 0;
-    font-size: 14px;
-    /*text-align: center;*/
-}
-/* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
-
-.wrapper {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
-}
 
 
 
-/* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
 
-#content {
-    width: 100%;
-    /*padding: 20px;*/
-    min-height: 100vh;
-    transition: all 0.3s;
-    font-weight: 700;
-    color: #6e6e6e;
-    font-size: 22px;
-    font-family: 'Nunito', sans-serif;
-}
-
-.customers-list {
-    font-weight: 300;
-    color: #6e6e6e;
-    font-size: 18px;
-    font-family: 'Nunito', sans-serif;
-}
-
-/*----------------Quick Start*/
-
-.columns {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    margin: 5px 0;
-}
-
-.column {
-    background: #f7f7f7;
-    border: 0px;
-    border-radius: 10px;
-    width: 80%;
-    padding: 10px;
-    margin-bottom: 30px;
-    /*flex: 1;
-    margin: 2px;
-    padding: 10px;
-    &:first-child { margin-left: 0; }
-    &:last-child { margin-right: 0; }*/
-    
-}
-
-
-.account_details {
-    width: 90% !important;
-    background: #fff;
-    border-radius: 10px;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    padding-left: 50px;
-    padding-right: 0px;
-    font-weight: 600;
-}
-
-.row {
-    padding-left: 35px
-}
-
-.metrics {
-    white-space: nowrap;
-}
-
-.custom_btn {
-    border-radius: 10px;
-    background: #2EDEFF;
-    width: 40%;
-    font-weight: 700;
-    color: #fff;
-    font-size: 20px;
-    font-family: 'Nunito', sans-serif;
-}
-
-/*------------Customer list table*/
 
 
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
-
+/*
 @media (max-width: 1400px) {
     
     .account_details {
         padding-left: 0px;
     }
-}
+}*/

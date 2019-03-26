@@ -1,31 +1,30 @@
 <nav id="sidebar">
   <div class="sidebar-header">
-      <img src="./assets/logo.png" />
+      <a routerLink="/"><img src="./assets/logo.png" /></a>
   </div>
-
   <ul class="list-unstyled components">
-    <li class="active">
-        <a (click)=changeActive(home) #home routerLink="">Home</a>
+    <li>
+        <a [class.active]="currentUrl == ''"  routerLinkActive="activated" [routerLinkActiveOptions]="{exact: true}" routerLink="/">Home</a>
     </li>
     <li>
-        <a (click)=changeActive(customers) #customers routerLink="customers">Customers</a>
+        <a [class.active]="currentUrl == '/customers'" routerLinkActive="activated" [routerLinkActiveOptions]="{exact: true}" routerLink="customers">Customers</a>
     </li>
     <li>
-        <a (click)=changeActive(campaigns) #campaigns routerLink="campaigns">Campaigns</a>
+        <a [class.active]="currentUrl == '/campaigns'" routerLinkActive="activated" [routerLinkActiveOptions]="{exact: true}" routerLink="campaigns">Campaigns</a>
     </li>
     <li>
-        <a (click)=changeActive(vouchers) #vouchers routerLink="voucher">Vouchers</a>
+        <a [class.active]="currentUrl == '/voucher'" routerLinkActive="activated" [routerLinkActiveOptions]="{exact: true}"  routerLink="voucher">Vouchers</a>
     </li>
 
     <div class="bottom-nav">
       <li>
-          <a (click)=changeActive(myaccount) #myaccount routerLink="user">My Account</a>
+          <a [class.active]="currentUrl == '/user'" routerLinkActive="activated" [routerLinkActiveOptions]="{exact: true}" routerLink="user">My Account</a>
       </li>
       <li>
           <a href="">Help</a>
       </li>
       <li>
-          <a (click)="authService.logout()">Log Out</a>
+          <a (click)="authService.logout()" style="cursor: pointer;">Log Out</a>
       </li>
     </div>
   </ul>

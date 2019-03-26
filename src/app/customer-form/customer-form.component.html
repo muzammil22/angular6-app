@@ -1,0 +1,40 @@
+  <div class="customer_modal">
+    <div class="modal-body">
+      <form [formGroup]="this.customerService.form" (ngSubmit)="onSubmit()">
+        <input type="hidden" formControlName="id">
+        <div class="form-group">
+          <label>Name:</label>
+          <input formControlName="name" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.name.errors}">
+          <div class="invalid-feedback" *ngIf="submitted && formControls.name.errors">
+            This field is required.</div>
+        </div>
+        <div class="form-group">
+          <label>Email:</label>
+          <input formControlName="email" type="email" name="email" id="email" ng-disabled="all" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.email.errors}">
+          <div class="invalid-feedback" *ngIf="submitted && formControls.email.errors">
+            This field is required.</div>
+        </div>
+        <div class="form-group">
+          <label>Contact Number:</label>
+          <input formControlName="contactNumber" type="tel" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.contactNumber.errors}">
+          <div class="invalid-feedback" *ngIf="submitted && formControls.contactNumber.errors">
+            <label *ngIf="formControls.contactNumber.errors.required">This field is required.</label>
+            <label *ngIf="formControls.contactNumber.errors.minlength">Atleast 8 numbers.</label>
+            <label *ngIf="formControls.contactNumber.errors.pattern">Please use numbers only.</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Birthday:</label>
+          <input formControlName="birthDate" type="date" class="form-control" ng-disabled="all" class="form-control" [ngClass]="{'is-invalid':submitted && formControls.birthDate.errors}">
+          <div class="invalid-feedback" *ngIf="submitted && formControls.birthDate.errors">
+            <label *ngIf="formControls.birthDate.errors.required">This field is required.</label>
+            <label *ngIf="formControls.birthDate.errors.validateBirthdate">Please select a past date.</label>
+          </div>
+        </div>
+        <button type="submit" value="submit" class="btn custom_btn" >Save</button>
+        <p style="text-align: center; padding-top: 10px;">
+          <button class="btn btn-lg  cancel_form_btn" style="text-align: center;" (click)="onCancel()">Cancel</button>
+        </p>
+      </form>
+    </div>
+  </div>

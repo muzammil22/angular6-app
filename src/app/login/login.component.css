@@ -1,4 +1,4 @@
-body {
+/*body {
     background: #fafafa;
 }
 
@@ -9,16 +9,16 @@ body {
 .form-adjustment {
     padding-right: 35px !important;
     padding-left: 35px !important;
-}
-
+}*/
+/*
 .left-pannel-img{
   width: inherit;
-  height: 100%;
-  height: -moz-available;          /* WebKit-based browsers will ignore this. */
-  height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
-  height: fill-available;
-}
-.form-container {
+  height: 100%;*/
+  /*height: -moz-available;           WebKit-based browsers will ignore this. */
+  /*height: -webkit-fill-available;   Mozilla-based browsers will ignore this. */
+  /*height: fill-available;*/
+/*}*/
+/*.form-container {
    width: 50%;
    float: right;
    padding-left: 100px;
@@ -84,4 +84,4 @@ body {
         margin: 50px;
 
     }
-}
+}*/

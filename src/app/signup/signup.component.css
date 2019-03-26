@@ -1,8 +1,12 @@
-body {
+/*body {
     background: #fafafa;
 }
+*/
+/*.error {
+  color: red;
+}*/
 
-.form-div {
+/*.form-div {
 	width: 50%;
 }
 
@@ -10,7 +14,7 @@ body {
 	padding-right: 35px !important;
 	padding-left: 35px !important;
 }
-
+*/
 /*.logo-image {
 	background-image: url('../assets/auth-logo.png');
 	width: 50%;
@@ -19,14 +23,8 @@ body {
    height: 100%;
    background-size: cover;
 }*/
-.left-pannel-img{
-  width: inherit;
-  height: 100%;
-  height: -moz-available;          /* WebKit-based browsers will ignore this. */
-  height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
-  height: fill-available;
-}
-.form-container {
+
+/*.form-container {
    width: 50%;
    float: right;
    padding-left: 100px;
@@ -68,8 +66,8 @@ body {
 .form-actions {
 	color: #2EDEFF !important;
 }
-
-.btn-login {
+*/
+/*.btn-login {
     background: #2EDEFF;
     width: 100%;
     font-weight: 700;
@@ -79,15 +77,15 @@ body {
     border-radius: 10px;
     padding: 10px 0;
 
-}
+}*/
 
-.account-exist {
+/*.account-exist {
   font-weight: 600;
   text-align: center;
   padding-top: 10px;
-}
+}*/
 
-@media (min-width: 1400px) {
+/*@media (min-width: 1400px) {
     .form-adjustment {
 		padding-right: 50px !important;
 		padding-left: 50px !important;
@@ -97,4 +95,4 @@ body {
 		padding-bottom: 25px;
 
 	}
-}
+}*/

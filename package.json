@@ -24,6 +24,8 @@
     "@angular/platform-browser-dynamic": "^6.0.2",
     "@angular/router": "^6.0.2",
     "@ng-bootstrap/ng-bootstrap": "^4.1.0",
+    "angular-bootstrap-md": "^7.4.3",
+    "angular-images-resizer": "^2.0.3",
     "angularfire2": "^5.1.2",
     "core-js": "^2.5.4",
     "firebase": "^5.9.0",

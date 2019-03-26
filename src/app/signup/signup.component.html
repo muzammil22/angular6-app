@@ -4,21 +4,33 @@
 	    <img src="./assets/auth-logo.png" class="left-pannel-img"/>
 	  </div>
 	  <div class="col-12 col-md-6 my-auto form-adjustment">
+	  	<div class="alert alert-danger" *ngIf="showErrorMessage">
+		    {{this.errorMessage}}
+		  </div>
+		  <div *ngIf="showSpinner" style="position:fixed;top:50%;left:50%">
+        <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+      </div>
 	    <div class="form-box">
     	<form [formGroup]="signUpForm"  *ngIf="newUser"  (ngSubmit)="signup()">
 	      <div class="form-group">
 	        <label for="name" class="form-heading">Name:</label>
 	        <input type="name" class="form-control" formControlName="name" required>
 	      </div>
+	      <div *ngIf="formErrors.name" class="error">
+			    {{ formErrors.name }}
+			  </div>
 	      <div class="form-group">
 	        <label for="name" class="form-heading">Company name:</label>
 	        <input type="name" class="form-control" formControlName="companyName" required>
 	      </div>
+	      <div *ngIf="formErrors.companyName" class="error">
+			    {{ formErrors.companyName }}
+			  </div>
 	      <div class="form-group">
 	        <label for="email" class="form-heading">Email:</label>
 	        <input type="email" class="form-control" formControlName="email" required>
 	      </div>
-	      <div *ngIf="formErrors.email">
+	      <div *ngIf="formErrors.email" class="error">
 			    {{ formErrors.email }}
 			  </div>
 	      <div class="form-group">
@@ -32,7 +44,7 @@
 	        <label for="num" class="form-heading">Contact number:</label>
 	        <input type="tel" class="form-control" id="contact-number" formControlName="contactNumber" required>
 	      </div>
-	      <button type="submit" class="btn btn-default btn-login" [disabled]="!signUpForm.valid">Sign up</button>
+	      <button type="submit" class="btn btn-default btn-login" [disabled]=signupBtnClicked>Sign up</button>
 	      <!-- <span *ngIf="signUpForm.valid" >Form is valid</span> -->
 	      <p class="account-exist" >Got account?<a class="form-actions" routerLink="/login"> Log in.</a></p>
 	    </form>

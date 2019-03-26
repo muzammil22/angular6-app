@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserService } from  '../user.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -12,16 +13,29 @@ export class UserComponent implements OnInit {
 
   user = {};
   temp = {};
-  constructor(public userService: UserService) { }
+  showSuccessMessage: boolean
+  showSpinner: boolean = true
+
+  constructor(public userService: UserService, private firestore: AngularFirestore) { }
 
   ngOnInit() {
    this.temp = this.userService.getUser().then((doc) => {
-      console.log("Document data:", doc.data());
+      this.showSpinner = false;
       this.user = doc.data();
-      let data = Object.assign({ id: '132'}, this.user);
-      console.log("Document data:", data);
+      let data = Object.assign({ id: JSON.parse(localStorage.getItem('user')).uid}, this.user);
       this.userService.populateForm(data)
     });
+  }
+
+  onSubmit(){
+    let data = Object.assign({}, this.userService.form.value);
+    delete data.id
+    if (this.userService.form.valid)
+    { 
+      this.firestore.doc('merchants/' + this.userService.form.value.id).update(data);
+      this.showSuccessMessage = true;
+      setTimeout(() => this.showSuccessMessage = false, 3000);
+    }
   }
 
 }

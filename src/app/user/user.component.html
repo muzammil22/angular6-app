@@ -3,11 +3,11 @@
   <!-- Top Bar -->
   <div class="container-fluid top-bar">
     <div class="row" class="d-flex justify-content-between">
-      <div class="col-sm-6" style="text-align: left; " >
+      <div class="col-sm-6 top_bar_my_account_heading " >
         My Account
       </div>
-      <div class="col-sm-6" style="text-align: right;">
-        <button class="btn btn-lg custom_btn" (click)="open(customerModal)">Save</button>
+      <div class="col-sm-6 top_bar_add_button">
+        <button class="btn btn-lg user_save_btn" (click)="onSubmit()">Save</button>
       </div>
     </div>
   </div>
@@ -16,36 +16,38 @@
     Submit Successfully
   </div>
 
-
+  <div *ngIf="showSpinner" style="position:fixed;top:50%;left:50%">
+    <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+  </div>
   <!-- Table code -->
-  <form [formGroup]="this.userService.form" (ngSubmit)="onSubmit()">
+  <form *ngIf="!showSpinner" [formGroup]="this.userService.form" (ngSubmit)="onSubmit()">
     <input type="hidden" formControlName="id">
     <div class="container account_details">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          Name:
-          <input formControlName="name" class="form-control column" disabled>
+          <label>Name:</label>
+          <input formControlName="name" class="form-control column" >
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          Company Name:
-          <input formControlName="companyName" class="form-control column" disabled>
+          <label>Company Name:</label>
+          <input formControlName="companyName" class="form-control column" >
         </div>
       </div>
       
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          Email:
+          <label>Email:</label>
           <input formControlName="email" type="email" class="form-control column" disabled>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          Contact Number:
-          <input formControlName="contactNumber" type="tel" class="form-control column" disabled>
+          <label>Contact Number:</label>
+          <input formControlName="contactNumber" type="tel" class="form-control column" >
         </div>
       </div>
       
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          Plan:
+          <label>Plan:</label>
           <input class="form-control column" disabled>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
