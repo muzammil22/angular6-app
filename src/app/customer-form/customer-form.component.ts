@@ -49,7 +49,7 @@ export class CustomerFormComponent implements OnInit {
       if (this.customerService.form.value.id == null)
         if (this.customerArray.filter(item => item.email === data.email).length == 0){
           this.customerService.insertCustomer(data);
-          if(this.merchantCustomers && this.merchantCustomers.length == 0){
+          if(!this.merchantCustomers || this.merchantCustomers.length == 0){
             this.customerService.initializeCustomerListCollection(data.email)
           }
           else {

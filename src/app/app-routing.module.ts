@@ -48,11 +48,6 @@ const routes: Routes = [
 		path: 'user',
 		component: UserComponent,
 		canActivate: [AuthGuard]
-	},
-	{
-		path: 'test-nav',
-		component: MainNavComponent,
-		canActivate: [AuthGuard]
 	}
   
 

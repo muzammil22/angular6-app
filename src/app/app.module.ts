@@ -23,7 +23,7 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { SignupComponent } from './signup/signup.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSlideToggleModule, MatListModule, MatToolbarModule } from '@angular/material';
+import { MatSlideToggleModule, MatListModule, MatToolbarModule, MatIconModule, MatButtonModule } from '@angular/material';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { DefaultCampaignFormComponent } from './default-campaign-form/default-campaign-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -31,7 +31,6 @@ import { CustomerFormComponent } from './customer-form/customer-form.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MainNavComponent } from './main-nav/main-nav.component';
-
 
 var config = {
     apiKey: "AIzaSyDGZz5JIGHUVx0TKcHjxX8BpXWrl-LVAAA",
@@ -77,7 +76,9 @@ var config = {
     MatSnackBarModule,
     MatSidenavModule,
     MatListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [CustomerService, CampaignService, AuthGuardService, UserService],
   bootstrap: [AppComponent]

@@ -9,6 +9,10 @@ body {
   height: 100vh;
 }
 
+.gradient {
+    background-image: linear-gradient(to right, #2EDEFF , #FF3BBB);
+}
+
 nav {
   background: #fff;
   height: 100%;
@@ -669,5 +673,9 @@ button:focus {outline:0 !important;}
     }
     .list_propertise tbody {
         height: 350px !important;
+    }
+    .form-box {
+        padding-top: 10px;
+        padding-bottom: 5px;
     }
 }
